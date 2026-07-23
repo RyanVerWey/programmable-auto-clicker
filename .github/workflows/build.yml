@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Build and test
+        shell: powershell
+        run: .\test.ps1
+
+      - name: Create portable package
+        shell: powershell
+        run: .\package.ps1
+
+      - name: Verify release archive
+        shell: powershell
+        run: .\verify-release.ps1
+
+      - name: Upload portable package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ProgrammableAutoClicker-windows-x64
+          path: |
+            dist/ProgrammableAutoClicker-v1.0.0-windows-x64.zip
+            dist/ProgrammableAutoClicker-v1.0.0-windows-x64.zip.sha256
+          if-no-files-found: error

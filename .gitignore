@@ -1,0 +1,30 @@
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+.DS_Store
+build/
+dist/
+*.spec
+profiles/*.json
+*.profile
+out/
+lib/
+*.class
+*.jar
+*.msi
+*.exe
+.brain/
+.plan/
+AGENTS.md
+docs/project-architecture.md
+docs/project-overview.md
+docs/project-workflows.md
+
+# brain:begin gitignore-session
+.brain/session.json
+.brain/sessions/
+.brain/policy.override.yaml
+.brain/state/
+# brain:end gitignore-session
